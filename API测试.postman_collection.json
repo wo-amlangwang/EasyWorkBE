@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "41db5dbf-fa9d-4e4c-a990-673221d6c418",
+		"name": "API测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户管理",
+			"item": [
+				{
+					"name": "登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "986264xm",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "627426xm",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/api/reguser",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"api",
+								"reguser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新用户信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nickname",
+									"value": "Jzero",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "459775893@qq.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/my/userinfo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"my",
+								"userinfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取用户信息",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/my/userinfo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"my",
+								"userinfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改密码",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "newPwd",
+									"value": "627426xm",
+									"type": "text"
+								},
+								{
+									"key": "oldPwd",
+									"value": "986264xm",
+									"type": "text"
+								},
+								{
+									"key": "rePwd",
+									"value": "627426xm",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/my/updatepwd",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"my",
+								"updatepwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更换头像",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "avatar",
+									"value": "data:image/png;base64,VE9PTUFOWVNFQ1JFVFM=",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/my/update/avatar",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"my",
+								"update",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
