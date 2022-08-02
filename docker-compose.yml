@@ -2,23 +2,35 @@ version: '3'
 services:
   web:
     build: .
+    container_name: easywork_be
+    restart: always
     ports:
       - "0.0.0.0:9000:3007"
     volumes:
       - ./api_server:/server
-      - ./log:/root/.npm/_logs/
-    links:
-      - mysql
+      - ./data/log/node:/root/.npm/_logs/
     depends_on:
       - mysql
   mysql:
-    image: mysql
-    ports:
-      - "3306:3306"
+    image: mysql:5.7
+    container_name: easywork_mysql
+    restart: always
+    volumes:
+      # 数据
+      - ./data/mysql/data:/var/lib/mysql
+      # 日志
+      - ./data/log/mysql:/var/log/mysql
+      # 配置
+      - ./data/mysql/conf:/etc/mysql/conf.d
+    command:
+      [
+        'mysqld',
+        '--innodb-buffer-pool-size=80M',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00',
+      ]
+    # ports:
+    #   - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
-    expose:
-      - "3306"
-    
-volumes:
-  logvolume01: {}
