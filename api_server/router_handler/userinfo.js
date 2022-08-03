@@ -25,9 +25,6 @@ exports.getUserInfo = (req, res) => {
 
 // 更新用户基本信息的处理函数
 exports.updateUserInfo = (req, res) => {
-  console.log(1234)
-  /* const userinfo = req.body
-  console.log(userinfo) */
   // 定义待执行的 SQL 语句
   const sql = `update users set ? where id=?`
   // 调用 db.query() 执行 SQL 语句并传递参数
@@ -43,10 +40,9 @@ exports.updateUserInfo = (req, res) => {
 
 // 更新用户密码的处理函数
 exports.updatePassword = (req, res) => {
-  console.log(1234)
   // 接收表单的数据
   const userinfo = req.body
-  console.log(req.user.id)
+
   // 根据 id 查询用户的信息
   const sql = `select * from users where id=?`
   // 执行根据 id 查询用户的信息的 SQL 语句
@@ -57,13 +53,13 @@ exports.updatePassword = (req, res) => {
     if (results.length !== 1) return res.cc('用户不存在！')
 
     // 判断密码是否正确
-    const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
+    const compareResult = bcrypt.compareSync(userinfo.oldPwd, results[0].password)
     if (!compareResult) return res.cc('旧密码错误！')
 
     // 定义更新密码的 SQL 语句
     const sql = `update users set password=? where id=?`
     // 对新密码进行加密处理
-    const newPwd = bcrypt.hashSync(req.body.newPwd, 10)
+    const newPwd = bcrypt.hashSync(userinfo.newPwd, 10)
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, [newPwd, req.user.id], (err, results) => {
       // 执行 SQL 语句失败

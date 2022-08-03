@@ -4,12 +4,16 @@ const express = require('express')
 const app = express()
 const joi = require('@hapi/joi')
 
+const bodyParser=require( "body-parser");//解析参数
+
 // 导入并配置 cors 中间件
 const cors = require('cors')
 app.use(cors())
 
-// 配置解析表单数据的中间件，注意：这个中间件，只能解析 application/x-www-form-urlencoded 格式的表单数据
-app.use(express.urlencoded({ extended: false }))
+//配置解析表单数据的中间件，解析 json 格式的表单数据
+app.use(bodyParser.json())
+//配置解析表单数据的中间件，解析 application/x-www-form-urlencoded 格式的表单数据
+app.use(bodyParser.urlencoded({extended:false}))
 
 // 托管静态资源文件
 app.use('/uploads', express.static('./uploads'))
@@ -39,6 +43,14 @@ app.use('/api', userRouter)
 // 导入并使用用户信息的路由模块
 const userinfoRouter = require('./router/userinfo')
 app.use('/my', userinfoRouter)
+
+// 导入并使用项目路由模块
+const projectRouter = require('./router/project')
+app.use('/project', projectRouter)
+
+// 导入并使用任务路由模块
+const taskRouter = require('./router/task')
+app.use('/task', taskRouter)
 
 // 定义错误级别的中间件
 app.use((err, req, res, next) => {
