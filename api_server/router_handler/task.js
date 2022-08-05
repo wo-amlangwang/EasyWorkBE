@@ -169,13 +169,13 @@ exports.updateTaskByStatus = (req, res) => {
 
     var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = 'update task set status=?, update_user=?, update_time=? where task_name=? and project_name=?'
+    const sql = 'update task set status=?, update_user=?, update_time=? where id=? and project_name=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.status, req.user.username, update_time, info.task_name, info.project_name], (err, results) => {
+    db.query(sql, [req.params.status, req.user.username, update_time, info.id, info.project_name], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
-            message: '拖动修改任务完成度成功！',
+            message: 'success',
             data: results,
         })
     })

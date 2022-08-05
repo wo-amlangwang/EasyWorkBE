@@ -96,7 +96,7 @@ exports.updatestatus_task_schema = {
     },
     body: {
         project_name: name,
-        task_name: name
+        id: id
     },
 }
 
@@ -106,7 +106,6 @@ exports.get_task_schema = {
         id: id,
     },
 }
-
 // 验证规则对象 - 更新任务
 exports.update_task_schema = {
     body: {
