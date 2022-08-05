@@ -74,7 +74,7 @@ exports.updatetype_task_schema = {
     },
     body: {
         project_name: name,
-        task_name: name
+        id: id
     },
 }
 
@@ -85,7 +85,7 @@ exports.updatepriority_task_schema = {
     },
     body: {
         project_name: name,
-        task_name: name
+        id: id
     },
 }
 
