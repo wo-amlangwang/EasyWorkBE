@@ -54,7 +54,7 @@ exports.createProject = (req, res) => {
 // 获取项目列表的处理函数
 exports.getProjectList = (req, res) => {
     // 定义查询项目列表数据的 SQL 语句
-    const sql = `select * from project_user_rel where numbers=? and deleted = 0`
+    const sql = `select * from project_user_rel where members=? and deleted = 0`
     // const sql = `select * from project_user_rel where numbers=? order by id asc`
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, req.user.username, (err, results) => {
@@ -99,7 +99,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_name: info.project_name, numbers: info.member }, (err, results) => {
+            db.query(sql, { p_name: info.project_name, members: info.member }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
