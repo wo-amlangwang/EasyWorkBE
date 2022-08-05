@@ -14,8 +14,8 @@ exports.createProject = (req, res) => {
     const projectinfo = req.body
 
     // 定义 SQL 语句，查询项目名是否被占用
-    const sqlStr = 'select * from project where project_name=?'
-    db.query(sqlStr, projectinfo.project_name, (err, results) => {
+    const sqlStr = 'select * from project where project_name=? and create_user=?'
+    db.query(sqlStr, [projectinfo.project_name, req.user.username], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
