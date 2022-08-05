@@ -44,25 +44,26 @@ exports.createTask = (req, res) => {
     })
 }
 
-// 根据 任务名 删除任务的处理函数(仅任务创建人可删除)
-exports.deleteTaskByName = (req, res) => {
+// 根据 任务ID 删除任务的处理函数(仅任务创建人可删除)
+exports.deleteTaskById = (req, res) => {
     // 获取客户端提交到服务器的信息
     const info = req.body
 
     // 定义标记删除的 SQL 语句
-    const sql = 'select * from task where task_name=? and project_name=? and create_user=?'
+    const sql = 'select * from task where id=? and project_name=? and create_user=?'
     // 调用 db.query() 执行 SQL 语句 判断当前用户是否是任务创建人
-    db.query(sql, [info.task_name, info.project_name, req.user.username], (err, results) => {
+    db.query(sql, [info.id, info.project_name, req.user.username], (err, results) => {
         if (err) return res.cc(err)
         // 判断查找行数是否为 1
         if (results.length !== 1) return res.cc('当前用户不是该用户创建人！')
         var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // 定义标记删除的 SQL 语句
-        const sql2 = `update task set deleted=1, update_user=?, update_time=? where task_name=? and project_name=? and create_user=?`
+        const sql2 = `update task set deleted=1, update_user=?, update_time=? where id=? and project_name=? and create_user=?`
         // 调用 db.query() 执行 SQL 语句
-        db.query(sql2, [req.user.username, update_time, info.task_name, info.project_name, req.user.username], (err, results) => {
+        db.query(sql2, [req.user.username, update_time, info.id, info.project_name, req.user.username], (err, results) => {
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
+            console.log(results.affectedRows)
             if (results.affectedRows !== 1) return res.cc('删除任务失败！')
             res.cc('删除任务成功！', 0)
         })
