@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "41db5dbf-fa9d-4e4c-a990-673221d6c418",
 		"name": "API测试",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22076381"
 	},
 	"item": [
 		{
@@ -14,19 +15,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "986264xm",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin3\",\r\n    \"password\":\"986264xm\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3007/api/login",
@@ -52,19 +47,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "admin2",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "627426xm",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin3\",\r\n    \"password\":\"627426xm\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3007/api/reguser",
@@ -91,24 +80,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "nickname",
-									"value": "Jzero",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "459775893@qq.com",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":5,\r\n    \"username\":\"admin3\",\r\n    \"nickname\":\"JZero\",\r\n    \"email\":\"459775893@qq.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3007/my/userinfo",
@@ -138,7 +121,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
 								"type": "text"
 							}
 						],
@@ -171,29 +154,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "newPwd",
-									"value": "627426xm",
-									"type": "text"
-								},
-								{
-									"key": "oldPwd",
-									"value": "986264xm",
-									"type": "text"
-								},
-								{
-									"key": "rePwd",
-									"value": "627426xm",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPwd\":\"627426xm\",\r\n    \"newPwd\":\"986264xm\",\r\n    \"rePwd\":\"986264xm\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3007/my/updatepwd",
@@ -220,19 +192,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiIiwibmlja25hbWUiOiJqemVybyIsImVtYWlsIjoiNDU5Nzc1ODkzQHFxLmNvbSIsInVzZXJfcGljIjoiIiwiaWF0IjoxNjU4Mjk1ODQ5LCJleHAiOjE2NTgzMzE4NDl9.BT0zgWOMzDpGX9iucQQMPQ-ExlHCP5jSPc2HA16jIyA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "avatar",
-									"value": "data:image/png;base64,VE9PTUFOWVNFQ1JFVFM=",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"avatar\":\"data:image/png;base64,VE9PTUFOWVNFQ1JFVFM=\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:3007/my/update/avatar",
@@ -248,6 +219,704 @@
 								"my",
 								"update",
 								"avatar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "项目管理",
+			"item": [
+				{
+					"name": "创建项目",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\":\"easywork4\",\r\n    \"project_details\":\"团队管理平台4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/projectlist",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"projectlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "添加项目成员",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectname\":\"easywork\",\r\n    \"member\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/addmember",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"addmember"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除项目",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/deleteproject",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"deleteproject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取单个项目基础信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/getproject",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"getproject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新单个项目基础信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjpudWxsLCJlbWFpbCI6bnVsbCwidXNlcl9waWMiOiIiLCJpYXQiOjE2NTk0MTU2MzUsImV4cCI6MTY1OTQ1MTYzNX0.OMXS8q4haG_IwOLBydRok5xIPcrg3WWrS4AloYqjwmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":3,\r\n    \"project_name\":\"easywork\",\r\n    \"project_details\":\"这个团队管理系统yyds\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/updateproject",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"updateproject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目成员列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\":\"easywork\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/projectmemberlist",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"projectmemberlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目任务列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\":\"easywork2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/project/projecttasklist",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"project",
+								"projecttasklist"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "任务管理",
+			"item": [
+				{
+					"name": "创建任务",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_name\":\"design4\",\r\n    \"task_details\":\"设计文档\",\r\n    \"project_name\":\"easywork\",\r\n    \"type\":\"1\",\r\n    \"priority\":\"1\",\r\n    \"deadline\":\"2022-08-22 13:43:40\",\r\n    \"assignee\":\"admin\",\r\n    \"task_comment\":\"qwqw\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除任务",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\",\r\n    \"task_name\": \"design4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/deletetask",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"deletetask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目类型列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/tasktypelist/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"tasktypelist",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目优先级列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/taskprioritylist/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"taskprioritylist",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取项目完成度列表",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/taskstatuslist/0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"taskstatuslist",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "拖动修改任务类型",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\",\r\n    \"task_name\": \"design3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/updatetasktype/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"updatetasktype",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "拖动修改任务优先级",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\",\r\n    \"task_name\": \"design3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/updatetaskpriority/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"updatetaskpriority",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "拖动修改任务完成度",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"project_name\": \"easywork\",\r\n    \"task_name\": \"design3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/updatetaskstatus/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"updatetaskstatus",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取单个任务基础信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/gettask",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"gettask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新单个任务基础信息",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJhZG1pbjMiLCJwYXNzd29yZCI6IiIsIm5pY2tuYW1lIjoiSnplcm8iLCJlbWFpbCI6IjQ1OTc3NTg5M0BxcS5jb20iLCJ1c2VyX3BpYyI6IiIsImlhdCI6MTY1OTUyNjMyOSwiZXhwIjoxNjU5NTYyMzI5fQ.wtesvtwrtyYBcsTILcoR6CzQZiBVXNSfgRgA7__2yu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1\",\r\n    \"task_name\": \"design\",\r\n    \"task_details\": \"设计文档\",\r\n    \"project_name\": \"easywork\",\r\n    \"type\": 2,\r\n    \"priority\": 1,\r\n    \"deadline\": \"2022-08-31 13:43:40\",\r\n    \"assignee\": \"admin\",\r\n    \"status\": 0,\r\n    \"task_comment\": \"QAQ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3007/task/updatetask",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3007",
+							"path": [
+								"task",
+								"updatetask"
 							]
 						}
 					},
