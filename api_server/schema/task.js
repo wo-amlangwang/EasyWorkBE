@@ -33,7 +33,7 @@ exports.create_schema = {
 exports.delete_task_schema = {
     body: {
         project_name: name,
-        task_name: name
+        id: id
     },
 }
 
