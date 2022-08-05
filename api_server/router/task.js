@@ -15,7 +15,7 @@ const { create_schema, delete_task_schema, type_task_schema, priority_task_schem
 // 创建新任务的路由
 router.post('/create', expressJoi(create_schema), task_handler.createTask)
 // 删除任务的路由
-router.post('/deletetask', expressJoi(delete_task_schema), task_handler.deleteTaskByName)
+router.post('/deletetask', expressJoi(delete_task_schema), task_handler.deleteTaskById)
 
 // 获取单一项目任务列表 按类型查询
 router.post('/tasktypelist/:type', expressJoi(type_task_schema), task_handler.getTaskListByType)
