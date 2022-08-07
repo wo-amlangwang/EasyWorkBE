@@ -16,8 +16,17 @@ const user_email = joi.string().email().required()
 // 定义验证 avatar 头像的验证规则
 const avatar = joi.string().dataUri().required()
 
-// 定义验证注册和登录表单数据的规则对象
-exports.reg_login_schema = {
+// 定义验证注册表单数据的规则对象
+exports.reg_schema = {
+  body: {
+    username,
+    password,
+    email: user_email
+  },
+}
+
+// 定义验证登录表单数据的规则对象
+exports.login_schema = {
   body: {
     username,
     password,

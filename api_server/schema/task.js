@@ -20,6 +20,7 @@ exports.create_schema = {
         task_name: name,
         task_details: details,
         project_name: name,
+        p_id: id,
         type: type,
         priority: priority,
         deadline: details,
@@ -32,7 +33,7 @@ exports.create_schema = {
 // 验证规则对象 - 删除任务
 exports.delete_task_schema = {
     body: {
-        project_name: name,
+        p_id: id,
         id: id
     },
 }
@@ -43,7 +44,7 @@ exports.type_task_schema = {
         type: type
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -53,7 +54,7 @@ exports.priority_task_schema = {
         priority: priority
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -63,7 +64,7 @@ exports.status_task_schema = {
         status: status
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -73,7 +74,7 @@ exports.updatetype_task_schema = {
         type: type
     },
     body: {
-        project_name: name,
+        p_id: id,
         id: id
     },
 }
@@ -84,7 +85,7 @@ exports.updatepriority_task_schema = {
         priority: priority
     },
     body: {
-        project_name: name,
+        p_id: id,
         id: id
     },
 }
@@ -95,7 +96,7 @@ exports.updatestatus_task_schema = {
         status: status
     },
     body: {
-        project_name: name,
+        p_id: id,
         id: id
     },
 }
@@ -112,7 +113,7 @@ exports.update_task_schema = {
         id: id,
         task_name: name,
         task_details: details,
-        project_name: name,
+        p_id: id,
         type: type,
         priority: priority,
         deadline: details,
