@@ -11,10 +11,6 @@ const config = require('../config')
 exports.regUser = (req, res) => {
   // 获取客户端提交到服务器的用户信息
   const userinfo = req.body
-  // 对表单中的数据，进行合法性的校验
-  // if (!userinfo.username || !userinfo.password) {
-  //   return res.send({ status: 1, message: '用户名或密码不合法！' })
-  // }
 
   // 定义 SQL 语句，查询用户名是否被占用
   const sqlStr = 'select * from users where username=?'
@@ -34,7 +30,7 @@ exports.regUser = (req, res) => {
     // 定义插入新用户的 SQL 语句
     const sql = 'insert into users set ?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, { username: userinfo.username, password: userinfo.password }, (err, results) => {
+    db.query(sql, { username: userinfo.username, password: userinfo.password, email: userinfo.email }, (err, results) => {
       // 判断 SQL 语句是否执行成功
       // if (err) return res.send({ status: 1, message: err.message })
       if (err) return res.cc(err)
@@ -52,7 +48,7 @@ exports.regUser = (req, res) => {
 exports.login = (req, res) => {
   // 接收表单的数据
   const userinfo = req.body
-  console.log(userinfo)
+  
   // 定义 SQL 语句
   const sql = `select * from users where username=?`
   // 执行 SQL 语句，根据用户名查询用户的信息

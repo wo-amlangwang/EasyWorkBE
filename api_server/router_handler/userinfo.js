@@ -13,7 +13,6 @@ exports.getUserInfo = (req, res) => {
     if (err) return res.cc(err)
     // 执行 SQL 语句成功，但是查询的结果可能为空
     if (results.length !== 1) return res.cc('获取用户信息失败！')
-
     // 用户信息获取成功
     res.send({
       status: 0,

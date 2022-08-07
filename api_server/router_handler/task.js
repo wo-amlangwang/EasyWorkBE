@@ -14,8 +14,8 @@ exports.createTask = (req, res) => {
     const info = req.body
 
     // 定义 SQL 语句，查询任务名是否被占用
-    const sqlStr = 'select * from task where task_name=? and project_name=?'
-    db.query(sqlStr, [info.task_name, info.project_name], (err, results) => {
+    const sqlStr = 'select * from task where task_name=? and p_id=?'
+    db.query(sqlStr, [info.task_name, info.p_id], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
@@ -29,7 +29,7 @@ exports.createTask = (req, res) => {
         var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // 调用 db.query() 执行 SQL 语句
         db.query(sql, {
-            task_name: info.task_name, task_details: info.task_details, project_name: info.project_name,
+            task_name: info.task_name, task_details: info.task_details, project_name: info.project_name, p_id: info.p_id,
             type: info.type, create_user: req.user.username, update_user: req.user.username, priority: info.priority,
             create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee,
             task_comment: info.task_comment
@@ -50,17 +50,17 @@ exports.deleteTaskById = (req, res) => {
     const info = req.body
 
     // 定义标记删除的 SQL 语句
-    const sql = 'select * from task where id=? and project_name=? and create_user=?'
+    const sql = 'select * from task where id=? and p_id=? and create_user=?'
     // 调用 db.query() 执行 SQL 语句 判断当前用户是否是任务创建人
-    db.query(sql, [info.id, info.project_name, req.user.username], (err, results) => {
+    db.query(sql, [info.id, info.p_id, req.user.username], (err, results) => {
         if (err) return res.cc(err)
         // 判断查找行数是否为 1
         if (results.length !== 1) return res.cc('当前用户不是该用户创建人！')
         var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // 定义标记删除的 SQL 语句
-        const sql2 = `update task set deleted=1, update_user=?, update_time=? where id=? and project_name=? and create_user=?`
+        const sql2 = `update task set deleted=1, update_user=?, update_time=? where id=? and p_id=? and create_user=?`
         // 调用 db.query() 执行 SQL 语句
-        db.query(sql2, [req.user.username, update_time, info.id, info.project_name, req.user.username], (err, results) => {
+        db.query(sql2, [req.user.username, update_time, info.id, info.p_id, req.user.username], (err, results) => {
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
             console.log(results.affectedRows)
@@ -76,9 +76,9 @@ exports.getTaskListByType = (req, res) => {
     const info = req.body
 
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = `select * from task where project_name=? and deleted = 0 and type=? order by update_time desc`
+    const sql = `select * from task where p_id=? and deleted = 0 and type=? order by update_time desc`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [info.project_name, req.params.type], (err, results) => {
+    db.query(sql, [info.p_id, req.params.type], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -94,9 +94,9 @@ exports.getTaskListByPriority = (req, res) => {
     const info = req.body
 
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = `select * from task where project_name=? and deleted = 0 and priority=? order by update_time desc`
+    const sql = `select * from task where p_id=? and deleted = 0 and priority=? order by update_time desc`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [info.project_name, req.params.priority], (err, results) => {
+    db.query(sql, [info.p_id, req.params.priority], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -112,9 +112,9 @@ exports.getTaskListByStatus = (req, res) => {
     const info = req.body
 
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = `select * from task where project_name=? and deleted = 0 and status=? order by update_time desc`
+    const sql = `select * from task where p_id=? and deleted = 0 and status=? order by update_time desc`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [info.project_name, req.params.status], (err, results) => {
+    db.query(sql, [info.p_id, req.params.status], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -131,9 +131,9 @@ exports.updateTaskByType = (req, res) => {
 
     var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = 'update task set type=?, update_user=?, update_time=? where id=? and project_name=?'
+    const sql = 'update task set type=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.type, req.user.username, update_time, info.id, info.project_name], (err, results) => {
+    db.query(sql, [req.params.type, req.user.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -150,9 +150,9 @@ exports.updateTaskByPriority = (req, res) => {
 
     var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = 'update task set priority=?, update_user=?, update_time=? where id=? and project_name=?'
+    const sql = 'update task set priority=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.priority, req.user.username, update_time, info.id, info.project_name], (err, results) => {
+    db.query(sql, [req.params.priority, req.user.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -169,9 +169,9 @@ exports.updateTaskByStatus = (req, res) => {
 
     var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     // 定义查询单一项目列表数据的 SQL 语句
-    const sql = 'update task set status=?, update_user=?, update_time=? where id=? and project_name=?'
+    const sql = 'update task set status=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.status, req.user.username, update_time, info.id, info.project_name], (err, results) => {
+    db.query(sql, [req.params.status, req.user.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -208,8 +208,8 @@ exports.updateTaskById = (req, res) => {
     const info = req.body
 
     // 定义 SQL 语句，查询任务名是否被占用
-    const sqlStr = 'select * from task where task_name=? and project_name=?'
-    db.query(sqlStr, [info.task_name, info.project_name], (err, results) => {
+    const sqlStr = 'select * from task where task_name=? and p_id=?'
+    db.query(sqlStr, [info.task_name, info.p_id], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
@@ -225,7 +225,7 @@ exports.updateTaskById = (req, res) => {
          deadline=?, assignee=?, status=?, task_comment=? where id=?`
         // 调用 db.query() 执行 SQL 语句
         db.query(sql, [info.task_name, info.task_details, info.type, req.user.username, info.priority, update_time,
-        info.deadline, info.assignee, info.status, info.task_comment, req.body.id], (err, results) => {
+        info.deadline, info.assignee, info.status, info.task_comment, info.id], (err, results) => {
             // 判断 SQL 语句是否执行成功
             if (err) return res.cc(err)
             // 判断影响行数是否为 1

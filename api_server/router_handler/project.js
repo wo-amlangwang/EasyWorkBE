@@ -8,14 +8,29 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const moment = require('moment')
 
+// 获取项目列表的处理函数
+exports.getProjectList = (req, res) => {
+    // 定义查询项目列表数据的 SQL 语句
+    const sql = `select * from project_user_rel where m_id=? and deleted = 0`
+    // 调用 db.query() 执行 SQL 语句
+    db.query(sql, req.user.id, (err, results) => {
+        if (err) return res.cc(err)
+        res.send({
+            status: 0,
+            message: '获取项目列表数据成功！',
+            data: results,
+        })
+    })
+}
+
 // 注册新项目的处理函数
 exports.createProject = (req, res) => {
     // 获取客户端提交到服务器的信息
     const projectinfo = req.body
 
     // 定义 SQL 语句，查询项目名是否被占用
-    const sqlStr = 'select * from project where project_name=? and create_user=? and deleted=0'
-    db.query(sqlStr, [projectinfo.project_name, req.user.username], (err, results) => {
+    const sqlStr = 'select * from project where project_name=? and create_uid=? and deleted=0'
+    db.query(sqlStr, [projectinfo.project_name, req.user.id], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
@@ -30,19 +45,19 @@ exports.createProject = (req, res) => {
         // 调用 db.query() 执行 SQL 语句
         var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // console.log(create_time)
-        db.query(sql, { project_name: projectinfo.project_name, project_details: projectinfo.project_details, create_user: req.user.username, create_time: create_time }, (err, results) => {
+        db.query(sql, { project_name: projectinfo.project_name, project_details: projectinfo.project_details, create_uid: req.user.id, create_user: req.user.username, create_time: create_time }, (err, results) => {
             // 判断 SQL 语句是否执行成功
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
             if (results.affectedRows !== 1) return res.cc('创建项目失败，请稍后再试！')
 
-            const sqlStr = 'select * from project where project_name=? and create_user=? and deleted=0'
-            db.query(sqlStr, [projectinfo.project_name, req.user.username], (err, results) => {
+            const sqlStr = 'select * from project where project_name=? and create_uid=? and deleted=0'
+            db.query(sqlStr, [projectinfo.project_name, req.user.id], (err, results) => {
 
                 // 定义插入新项目的 SQL 语句
                 const sql = 'insert into project_user_rel set ?'
                 // 调用 db.query() 执行 SQL 语句
-                db.query(sql, { p_name: projectinfo.project_name, members: req.user.username, p_id: results[0].id }, (err, results) => {
+                db.query(sql, { p_name: projectinfo.project_name, m_id: req.user.id, p_id: results[0].id }, (err, results) => {
                     // 判断 SQL 语句是否执行成功
                     if (err) return res.cc(err)
                     // 判断影响行数是否为 1
@@ -55,19 +70,23 @@ exports.createProject = (req, res) => {
     })
 }
 
-// 获取项目列表的处理函数
-exports.getProjectList = (req, res) => {
-    // 定义查询项目列表数据的 SQL 语句
-    const sql = `select * from project_user_rel where members=? and deleted = 0`
-    // const sql = `select * from project_user_rel where numbers=? order by id asc`
+// 根据 项目Id（唯一性）查询项目基本信息的处理函数
+exports.getProjectById = (req, res) => {
+    // 获取客户端提交到服务器的信息
+    const info = req.body
+    console.log(info)
+
+    // 定义根据 项目Id 获取项目基本信息的 SQL 语句
+    const sql = `select * from project where id=?`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, req.user.username, (err, results) => {
-        console.log(results)
+    db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
+        if (results.length !== 1) return res.cc('查询项目基本信息失败！')
+        // results[0].create_time = moment(results[0].create_time).format('YYYY-MM-DD HH:mm:ss')
         res.send({
             status: 0,
-            message: '获取项目列表数据成功！',
-            data: results,
+            message: '查询项目基本信息成功！',
+            data: results[0],
         })
     })
 }
@@ -88,10 +107,10 @@ exports.addMember = (req, res) => {
         if (results.length < 0) {
             return res.cc('该用户不存在，请重新添加其他用户！')
         }
-
+        var m_id = results[0].id
         // 2.判断添加的成员是否已在项目中
-        const sqlStr2 = 'select * from project_user_rel where p_id=? and members=?'
-        db.query(sqlStr2, [info.id, info.member], (err, results) => {
+        const sqlStr2 = 'select * from project_user_rel where p_id=? and m_id=?'
+        db.query(sqlStr2, [info.id, m_id], (err, results) => {
             // 执行 SQL 语句失败
             if (err) {
                 return res.cc(err)
@@ -104,7 +123,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_name: info.project_name, members: info.member, p_id: info.id }, (err, results) => {
+            db.query(sql, { p_name: info.project_name, m_id: m_id, p_id: info.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -135,27 +154,6 @@ exports.deleteProjectById = (req, res) => {
             // 此处不止更新一种
             // if (results.affectedRows !== 1) return res.cc('删除项目失败！')
             res.cc('删除项目成功！', 0)
-        })
-    })
-}
-
-
-// 根据 项目Id（唯一性）查询项目基本信息的处理函数
-exports.getProjectById = (req, res) => {
-    // 获取客户端提交到服务器的信息
-    const info = req.body
-
-    // 定义根据 project_name 获取项目基本信息的 SQL 语句
-    const sql = `select * from project where id=?`
-    // 调用 db.query() 执行 SQL 语句
-    db.query(sql, info.id, (err, results) => {
-        if (err) return res.cc(err)
-        if (results.length !== 1) return res.cc('查询项目基本信息失败！')
-        results[0].create_time = moment(results[0].create_time).format('YYYY-MM-DD HH:mm:ss')
-        res.send({
-            status: 0,
-            message: '查询项目基本信息成功！',
-            data: results[0],
         })
     })
 }
@@ -200,7 +198,7 @@ exports.getProjectMemberList = (req, res) => {
     const info = req.body
 
     // 定义查询项目列表数据的 SQL 语句
-    const sql = `select members from project_user_rel where p_id=? and deleted = 0`
+    const sql = `select username from user where username in (select m_id from project_user_rel where p_id=? and deleted = 0)`
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
