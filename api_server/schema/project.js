@@ -20,6 +20,7 @@ exports.create_schema = {
 // 定义添加成员数据的规则对象
 exports.addmember_schema = {
     body: {
+        id: id,
         project_name: name,
         member: name
     },
@@ -28,14 +29,14 @@ exports.addmember_schema = {
 // 验证规则对象 - 删除项目
 exports.delete_project_schema = {
     body: {
-        project_name: name
+        id: id
     },
 }
 
 // 验证规则对象 - 查询项目
 exports.get_project_schema = {
     body: {
-        project_name: name
+        id: id
     },
 }
 
