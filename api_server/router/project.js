@@ -17,11 +17,11 @@ router.post('/create', expressJoi(create_schema), project_handler.createProject)
 router.get('/projectlist', project_handler.getProjectList)
 // 添加项目成员的路由
 router.post('/addmember', expressJoi(addmember_schema), project_handler.addMember)
-// 根据 项目名（唯一性） 删除项目的路由
-router.post('/deleteproject', expressJoi(delete_project_schema), project_handler.deleteProjectByName)
-// 根据 项目名（唯一性）查询项目基本信息的路由
-router.post('/getproject', expressJoi(get_project_schema), project_handler.getProjectByName)
-// 根据 项目Id（唯一性）修改项目基本信息的路由
+// 根据 项目ID 删除项目的路由
+router.post('/deleteproject', expressJoi(delete_project_schema), project_handler.deleteProjectById)
+// 根据 项目ID 查询项目基本信息的路由
+router.post('/getproject', expressJoi(get_project_schema), project_handler.getProjectById)
+// 根据 项目ID 修改项目基本信息的路由
 router.post('/updateproject', expressJoi(update_project_schema), project_handler.updateProjectById)
 
 // 根据 项目名（唯一性）查询项目成员的路由
