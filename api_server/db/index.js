@@ -1,10 +1,11 @@
 const mysql = require('mysql')
+const conf = require('../config')
 
 const db = mysql.createPool({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '1234',
-  database: 'easywork',
+  host: conf.database.host,
+  user: conf.database.user,
+  password: conf.database.password,
+  database: conf.database.password,
 })
 
 module.exports = db

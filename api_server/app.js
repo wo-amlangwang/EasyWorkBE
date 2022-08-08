@@ -6,6 +6,8 @@ const joi = require('@hapi/joi')
 
 const bodyParser=require( "body-parser");//解析参数
 
+const conf = require('./config')
+
 // 导入并配置 cors 中间件
 const cors = require('cors')
 app.use(cors())
@@ -64,6 +66,6 @@ app.use((err, req, res, next) => {
 })
 
 // 启动服务器
-app.listen(3007, () => {
-  console.log('api server running at http://127.0.0.1:3007')
+app.listen(conf.run.port, () => {
+  console.log('api server running at http://127.0.0.1:' + conf.run.port)
 })
