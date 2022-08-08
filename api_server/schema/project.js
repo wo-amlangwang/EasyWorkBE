@@ -2,7 +2,7 @@
 const joi = require('@hapi/joi')
 
 // 定义项目名的验证规则
-const name = joi.string().alphanum().min(1).max(10).required()
+const name = joi.string().min(1).max(10).required()
 
 // 定义 id, details的验证规则
 const id = joi.number().integer().min(1).required()
