@@ -55,7 +55,7 @@ exports.createProject = (req, res) => {
             // 定义插入新项目的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_name: projectinfo.project_name, p_id: pid, m_id: req.auth.id }, (err, results) => {
+            db.query(sql, { p_id: pid, m_id: req.auth.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -177,14 +177,7 @@ exports.updateProjectById = (req, res) => {
         db.query(sql, [info.project_name, info.project_details, info.id], (err, results) => {
             if (err) return res.cc(err)
             if (results.affectedRows !== 1) return res.cc('更新项目失败！')
-            // 定义更新的 SQL 语句
-            const sql2 = `update project_user_rel set p_name=? where p_id=?`
-            // 调用 db.query() 执行 SQL 语句
-            db.query(sql2, [info.project_name, info.id], (err, results) => {
-                if (err) return res.cc(err)
-                if (results.affectedRows < 1) return res.cc('更新项目失败！')
-                res.cc('更新项目成功！', 0)
-            })
+            res.cc('更新项目成功！', 0)
         })
     })
 }
