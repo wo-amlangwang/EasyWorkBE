@@ -4,8 +4,6 @@ services:
     build: .
     container_name: easywork_be
     restart: always
-    ports:
-      - "0.0.0.0:9000:3007"
     volumes:
       - ./api_server:/server
       - ./data/log/node:/root/.npm/_logs/
@@ -31,6 +29,19 @@ services:
         '--default-time-zone=+8:00',
       ]
     # ports:
-    #   - 3306:3306
+    #   - "127.0.0.1:3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "1234"
+  nginx:
+    image: nginx:latest
+    container_name: easywork_nginx
+    restart: always
+    volumes:
+      - ./conf/nginx/:/etc/nginx/conf.d
+      - ./data/nginx/log:/var/log/nginx
+      - ./data/nginx/www:/var/www
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+    depends_on:
+      - web
