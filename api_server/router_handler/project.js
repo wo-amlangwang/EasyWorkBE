@@ -11,7 +11,7 @@ const moment = require('moment')
 // 获取项目列表的处理函数
 exports.getProjectList = (req, res) => {
     // 定义查询项目列表数据的 SQL 语句
-    const sql = `select * from project_user_rel where m_id=? and deleted = 0`
+    const sql = 'SELECT `project`.*, `users`.`nickname` as `master` FROM `project`, `project_user_rel`,`users` WHERE `project_user_rel`.`m_id` = ? AND `project_user_rel`.`deleted` = 0 AND `project`.`id` = `project_user_rel`.`p_id` AND `users`.`id` = `project_user_rel`.`m_id` ORDER BY `project`.`create_time` DESC';
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, req.user.id, (err, results) => {
         if (err) return res.cc(err)
