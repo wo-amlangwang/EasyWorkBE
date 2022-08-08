@@ -39,7 +39,7 @@ services:
     volumes:
       - ./conf/nginx/:/etc/nginx/conf.d
       - ./data/nginx/log:/var/log/nginx
-      - ./data/nginx/www:/var/www
+      - ./templates:/var/www
     ports:
       - 0.0.0.0:80:80
       - 0.0.0.0:443:443
