@@ -45,6 +45,7 @@ exports.createProject = (req, res) => {
         // 调用 db.query() 执行 SQL 语句
         var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // console.log(create_time)
+        // TODO： 移除createuser_name字段
         db.query(sql, { project_name: projectinfo.project_name, project_details: projectinfo.project_details, create_uid: req.user.id, create_user: req.user.username, create_time: create_time }, (err, results) => {
             // 判断 SQL 语句是否执行成功
             if (err) return res.cc(err)
@@ -74,8 +75,6 @@ exports.createProject = (req, res) => {
 exports.getProjectById = (req, res) => {
     // 获取客户端提交到服务器的信息
     const info = req.body
-    console.log(info)
-
     // 定义根据 项目Id 获取项目基本信息的 SQL 语句
     const sql = `select * from project where id=?`
     // 调用 db.query() 执行 SQL 语句
@@ -98,7 +97,7 @@ exports.addMember = (req, res) => {
 
     // 1.判断添加的成员是否存在
     const sqlStr = 'select * from users where id=?'
-    db.query(sqlStr, info.id, (err, results) => {
+    db.query(sqlStr, info.mid, (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
@@ -107,10 +106,9 @@ exports.addMember = (req, res) => {
         if (results.length < 0) {
             return res.cc('该用户不存在，请重新添加其他用户！')
         }
-        var m_id = results[0].id
         // 2.判断添加的成员是否已在项目中
         const sqlStr2 = 'select * from project_user_rel where p_id=? and m_id=?'
-        db.query(sqlStr2, [info.id, m_id], (err, results) => {
+        db.query(sqlStr2, [info.pid, info.mid], (err, results) => {
             // 执行 SQL 语句失败
             if (err) {
                 return res.cc(err)
@@ -123,7 +121,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_name: info.project_name, m_id: m_id, p_id: info.id }, (err, results) => {
+            db.query(sql, { m_id: m_id, p_id: info.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -196,16 +194,19 @@ exports.updateProjectById = (req, res) => {
 exports.getProjectMemberList = (req, res) => {
     // 获取客户端提交到服务器的信息
     const info = req.body
-
     // 定义查询项目列表数据的 SQL 语句
     const sql = 'SELECT `users`.`username` FROM `users`, `project_user_rel` WHERE `project_user_rel`.`m_id` = `users`.`id` AND `project_user_rel`.`p_id` = ?'
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
+        let members = new Array();
+        results.forEach((item) => {
+            members.push(item.username);
+        });
         res.send({
             status: 0,
             message: '获取项目成员列表数据成功！',
-            data: results,
+            data: members,
         })
     })
 }
@@ -216,7 +217,7 @@ exports.getProjectTaskList = (req, res) => {
     const info = req.body
 
     // 定义查询项目列表数据的 SQL 语句
-    const sql = `select * from task where p_id=? and deleted = 0 order by update_time desc`
+    const sql = `select * from task where p_id=? and deleted = 0 order by create_time desc`
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)

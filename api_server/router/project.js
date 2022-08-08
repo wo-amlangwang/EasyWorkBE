@@ -24,9 +24,9 @@ router.post('/getproject', expressJoi(get_project_schema), project_handler.getPr
 // 根据 项目ID 修改项目基本信息的路由
 router.post('/updateproject', expressJoi(update_project_schema), project_handler.updateProjectById)
 
-// 根据 项目名（唯一性）查询项目成员的路由
+// 根据 项目ID 查询项目成员的路由
 router.post('/projectmemberlist', expressJoi(get_project_schema), project_handler.getProjectMemberList)
-// 根据 项目名（唯一性）查询项目任务的路由
+// 根据 项目ID查询项目任务的路由
 router.post('/projecttasklist', expressJoi(get_project_schema), project_handler.getProjectTaskList)
 
 
