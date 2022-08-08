@@ -8,38 +8,29 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const moment = require('moment')
 
-// 注册新项目的处理函数
+// 创建新任务的处理函数
 exports.createTask = (req, res) => {
     // 获取客户端提交到服务器的信息
     const info = req.body
 
-    // 定义 SQL 语句，查询任务名是否被占用
-    const sqlStr = 'select * from task where task_name=? and p_id=?'
-    db.query(sqlStr, [info.task_name, info.p_id], (err, results) => {
-        // 执行 SQL 语句失败
-        if (err) {
-            return res.cc(err)
-        }
-        // 判断任务名是否被占用
-        if (results.length > 0) {
-            return res.cc('任务名被占用，请更换其他任务名！')
-        }
-        // 定义插入新任务的 SQL 语句
-        const sql = 'insert into task set ?'
-        var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-        // 调用 db.query() 执行 SQL 语句
-        db.query(sql, {
-            task_name: info.task_name, task_details: info.task_details, project_name: info.project_name, p_id: info.p_id,
-            type: info.type, create_user: req.user.username, update_user: req.user.username, priority: info.priority,
-            create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee,
-            task_comment: info.task_comment
-        }, (err, results) => {
-            // 判断 SQL 语句是否执行成功
-            if (err) return res.cc(err)
-            // 判断影响行数是否为 1
-            if (results.affectedRows !== 1) return res.cc('创建任务失败，请稍后再试！')
-            // 创建任务成功
-            res.cc('创建成功！', 0)
+    // 定义插入新任务的 SQL 语句
+    const sql = 'insert into task set ?'
+    var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    // 调用 db.query() 执行 SQL 语句
+    db.query(sql, {
+        task_name: info.task_name, task_details: info.task_details, p_id: info.p_id,
+        type: info.type, create_user: req.user.username, update_user: req.user.username, priority: info.priority,
+        create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee,
+        task_comment: info.task_comment
+    }, (err, results) => {
+        // 判断 SQL 语句是否执行成功
+        if (err) return res.cc(err)
+        // 判断影响行数是否为 1
+        if (results.affectedRows !== 1) return res.cc('创建任务失败，请稍后再试！')
+        // 创建任务成功
+        res.send({
+            status: 0,
+            id: results.insertId,
         })
     })
 }
@@ -55,7 +46,7 @@ exports.deleteTaskById = (req, res) => {
     db.query(sql, [info.id, info.p_id, req.user.username], (err, results) => {
         if (err) return res.cc(err)
         // 判断查找行数是否为 1
-        if (results.length !== 1) return res.cc('当前用户不是该用户创建人！')
+        if (results.length !== 1) return res.cc('当前用户不是该任务创建人！')
         var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // 定义标记删除的 SQL 语句
         const sql2 = `update task set deleted=1, update_user=?, update_time=? where id=? and p_id=? and create_user=?`
@@ -207,30 +198,17 @@ exports.updateTaskById = (req, res) => {
     // 获取客户端提交到服务器的用户信息
     const info = req.body
 
-    // 定义 SQL 语句，查询任务名是否被占用
-    const sqlStr = 'select * from task where task_name=? and p_id=?'
-    db.query(sqlStr, [info.task_name, info.p_id], (err, results) => {
-        // 执行 SQL 语句失败
-        if (err) {
-            return res.cc(err)
-        }
-        // 判断项目名是否被占用
-        if (results.length > 1) {
-            return res.cc('任务名被占用，请更换其他任务名！')
-        }
-
-        var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-        // 定义更新的 SQL 语句
-        const sql = `update task set task_name=?, task_details=?, type=?, update_user=?, priority=?, update_time=?,
-         deadline=?, assignee=?, status=?, task_comment=? where id=?`
-        // 调用 db.query() 执行 SQL 语句
-        db.query(sql, [info.task_name, info.task_details, info.type, req.user.username, info.priority, update_time,
-        info.deadline, info.assignee, info.status, info.task_comment, info.id], (err, results) => {
-            // 判断 SQL 语句是否执行成功
-            if (err) return res.cc(err)
-            // 判断影响行数是否为 1
-            if (results.affectedRows !== 1) return res.cc('更新任务失败！')
-            res.cc('更新任务成功！', 0)
-        })
+    var update_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    // 定义更新的 SQL 语句
+    const sql = `update task set task_name=?, task_details=?, type=?, update_user=?, priority=?, update_time=?,
+        deadline=?, assignee=?, status=?, task_comment=? where id=?`
+    // 调用 db.query() 执行 SQL 语句
+    db.query(sql, [info.task_name, info.task_details, info.type, req.user.username, info.priority, update_time,
+    info.deadline, info.assignee, info.status, info.task_comment, info.id], (err, results) => {
+        // 判断 SQL 语句是否执行成功
+        if (err) return res.cc(err)
+        // 判断影响行数是否为 1
+        if (results.affectedRows !== 1) return res.cc('更新任务失败！')
+        res.cc('更新任务成功！', 0)
     })
 }

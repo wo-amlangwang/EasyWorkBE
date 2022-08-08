@@ -19,7 +19,6 @@ exports.create_schema = {
     body: {
         task_name: name,
         task_details: details,
-        project_name: name,
         p_id: id,
         type: type,
         priority: priority,
