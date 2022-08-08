@@ -50,25 +50,22 @@ exports.createProject = (req, res) => {
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
             if (results.affectedRows !== 1) return res.cc('创建项目失败，请稍后再试！')
-
-            const sqlStr = 'select * from project where project_name=? and create_uid=? and deleted=0'
-            db.query(sqlStr, [projectinfo.project_name, req.user.id], (err, results) => {
-
-                // 定义插入新项目的 SQL 语句
-                const sql = 'insert into project_user_rel set ?'
-                // 调用 db.query() 执行 SQL 语句
-                db.query(sql, { p_name: projectinfo.project_name, m_id: req.user.id, p_id: results[0].id }, (err, results) => {
-                    // 判断 SQL 语句是否执行成功
-                    if (err) return res.cc(err)
-                    // 判断影响行数是否为 1
-                    if (results.affectedRows !== 1) return res.cc('创建项目失败，请稍后再试！')
-                    // 创建项目成功
-                    res.send({
-                        status: 0,
-                        id: results[0].id
-                    })
+            const pid = results.insertId;
+            // 定义插入新项目的 SQL 语句
+            const sql = 'insert into project_user_rel set ?'
+            // 调用 db.query() 执行 SQL 语句
+            db.query(sql, { p_id: pid, m_id: req.user.id }, (err, results) => {
+                // 判断 SQL 语句是否执行成功
+                if (err) return res.cc(err)
+                // 判断影响行数是否为 1
+                if (results.affectedRows !== 1) return res.cc('创建项目失败，请稍后再试！')
+                // 创建项目成功
+                res.send({
+                    status: 0,
+                    id: pid
                 })
             })
+
         })
     })
 }
