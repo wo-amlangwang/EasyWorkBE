@@ -19,12 +19,12 @@ exports.create_schema = {
     body: {
         task_name: name,
         task_details: details,
+        project_name: name,
         p_id: id,
         type: type,
         priority: priority,
         deadline: details,
         assignee: name,
-        // assignee: name2,
         task_comment: comment
     },
 }
