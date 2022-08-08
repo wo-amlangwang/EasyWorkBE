@@ -32,10 +32,10 @@ app.use((req, res, next) => {
 })
 
 // 一定要在路由之前配置解析 Token 的中间件
-const expressJWT = require('express-jwt')
+var { expressjwt: jwt } = require("express-jwt");
 const config = require('./config')
 
-app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api/] }))
+app.use(jwt({ secret: config.jwtSecretKey, algorithms: ["HS256"]  }).unless({ path: [/^\/api/] }))
 
 // 导入并使用用户路由模块
 const userRouter = require('./router/user')
@@ -63,6 +63,6 @@ app.use((err, req, res, next) => {
 })
 
 // 启动服务器
-app.listen(9000, () => {
-  console.log('api server running at http://127.0.0.1:9000')
+app.listen(3007, () => {
+  console.log('api server running at http://127.0.0.1:3007')
 })
