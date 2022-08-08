@@ -18,8 +18,11 @@ exports.createTask = (req, res) => {
     var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, {
-        task_name: info.task_name, task_details: info.task_details, p_id: info.p_id,
-        type: info.type, create_user: req.user.username, update_user: req.user.username, priority: info.priority,
+        // task_name: info.task_name, task_details: info.task_details,project_name: info.project_name, p_id: info.p_id,
+        // create_user: req.auth.username, update_user: req.auth.username,create_time: create_time, 
+        // update_time: create_time, deadline: info.deadline, assignee: info.assignee
+        task_name: info.task_name, task_details: info.task_details,project_name: info.project_name, p_id: info.p_id,
+        type: info.type, create_user: req.auth.username, update_user: req.auth.username, priority: info.priority,
         create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee,
         task_comment: info.task_comment
     }, (err, results) => {
@@ -43,7 +46,7 @@ exports.deleteTaskById = (req, res) => {
     // 定义标记删除的 SQL 语句
     const sql = 'select * from task where id=? and p_id=? and create_user=?'
     // 调用 db.query() 执行 SQL 语句 判断当前用户是否是任务创建人
-    db.query(sql, [info.id, info.p_id, req.user.username], (err, results) => {
+    db.query(sql, [info.id, info.p_id, req.auth.username], (err, results) => {
         if (err) return res.cc(err)
         // 判断查找行数是否为 1
         if (results.length !== 1) return res.cc('当前用户不是该任务创建人！')
@@ -51,7 +54,7 @@ exports.deleteTaskById = (req, res) => {
         // 定义标记删除的 SQL 语句
         const sql2 = `update task set deleted=1, update_user=?, update_time=? where id=? and p_id=? and create_user=?`
         // 调用 db.query() 执行 SQL 语句
-        db.query(sql2, [req.user.username, update_time, info.id, info.p_id, req.user.username], (err, results) => {
+        db.query(sql2, [req.auth.username, update_time, info.id, info.p_id, req.auth.username], (err, results) => {
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
             console.log(results.affectedRows)
@@ -124,7 +127,7 @@ exports.updateTaskByType = (req, res) => {
     // 定义查询单一项目列表数据的 SQL 语句
     const sql = 'update task set type=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.type, req.user.username, update_time, info.id, info.p_id], (err, results) => {
+    db.query(sql, [req.params.type, req.auth.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -143,7 +146,7 @@ exports.updateTaskByPriority = (req, res) => {
     // 定义查询单一项目列表数据的 SQL 语句
     const sql = 'update task set priority=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.priority, req.user.username, update_time, info.id, info.p_id], (err, results) => {
+    db.query(sql, [req.params.priority, req.auth.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -162,7 +165,7 @@ exports.updateTaskByStatus = (req, res) => {
     // 定义查询单一项目列表数据的 SQL 语句
     const sql = 'update task set status=?, update_user=?, update_time=? where id=? and p_id=?'
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [req.params.status, req.user.username, update_time, info.id, info.p_id], (err, results) => {
+    db.query(sql, [req.params.status, req.auth.username, update_time, info.id, info.p_id], (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -203,7 +206,7 @@ exports.updateTaskById = (req, res) => {
     const sql = `update task set task_name=?, task_details=?, type=?, update_user=?, priority=?, update_time=?,
         deadline=?, assignee=?, status=?, task_comment=? where id=?`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [info.task_name, info.task_details, info.type, req.user.username, info.priority, update_time,
+    db.query(sql, [info.task_name, info.task_details, info.type, req.auth.username, info.priority, update_time,
     info.deadline, info.assignee, info.status, info.task_comment, info.id], (err, results) => {
         // 判断 SQL 语句是否执行成功
         if (err) return res.cc(err)
