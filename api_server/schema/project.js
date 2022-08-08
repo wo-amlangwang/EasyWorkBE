@@ -20,6 +20,7 @@ exports.create_schema = {
 // 定义添加成员数据的规则对象
 exports.addmember_schema = {
     body: {
+        project_name: name,
         mid: id,
         pid: id
     },

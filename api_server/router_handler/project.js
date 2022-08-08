@@ -13,7 +13,7 @@ exports.getProjectList = (req, res) => {
     // 定义查询项目列表数据的 SQL 语句
     const sql = 'SELECT `project`.*, `users`.`nickname` as `master` FROM `project`, `project_user_rel`,`users` WHERE `project_user_rel`.`m_id` = ? AND `project_user_rel`.`deleted` = 0 AND `project`.`id` = `project_user_rel`.`p_id` AND `users`.`id` = `project_user_rel`.`m_id` ORDER BY `project`.`create_time` DESC';
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, req.user.id, (err, results) => {
+    db.query(sql, req.auth.id, (err, results) => {
         if (err) return res.cc(err)
         res.send({
             status: 0,
@@ -30,7 +30,7 @@ exports.createProject = (req, res) => {
 
     // 定义 SQL 语句，查询项目名是否被占用
     const sqlStr = 'select * from project where project_name=? and create_uid=? and deleted=0'
-    db.query(sqlStr, [projectinfo.project_name, req.user.id], (err, results) => {
+    db.query(sqlStr, [projectinfo.project_name, req.auth.id], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
@@ -46,7 +46,7 @@ exports.createProject = (req, res) => {
         var create_time = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         // console.log(create_time)
         // TODO： 移除createuser_name字段
-        db.query(sql, { project_name: projectinfo.project_name, project_details: projectinfo.project_details, create_uid: req.user.id, create_user: req.user.username, create_time: create_time }, (err, results) => {
+        db.query(sql, { project_name: projectinfo.project_name, project_details: projectinfo.project_details, create_uid: req.auth.id, create_user: req.auth.username, create_time: create_time }, (err, results) => {
             // 判断 SQL 语句是否执行成功
             if (err) return res.cc(err)
             // 判断影响行数是否为 1
@@ -55,7 +55,7 @@ exports.createProject = (req, res) => {
             // 定义插入新项目的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_id: pid, m_id: req.user.id }, (err, results) => {
+            db.query(sql, { p_name: projectinfo.project_name, p_id: pid, m_id: req.auth.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -81,7 +81,6 @@ exports.getProjectById = (req, res) => {
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
         if (results.length !== 1) return res.cc('查询项目基本信息失败！')
-        // results[0].create_time = moment(results[0].create_time).format('YYYY-MM-DD HH:mm:ss')
         res.send({
             status: 0,
             message: '查询项目基本信息成功！',
@@ -121,7 +120,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { m_id: m_id, p_id: info.id }, (err, results) => {
+            db.query(sql, { p_name: info.project_name, m_id: m_id, p_id: info.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -163,7 +162,7 @@ exports.updateProjectById = (req, res) => {
 
     // 定义 SQL 语句，查询项目名是否被占用
     const sqlStr = 'select * from project where project_name=? and create_user=? and deleted=0'
-    db.query(sqlStr, [info.project_name, req.user.username], (err, results) => {
+    db.query(sqlStr, [info.project_name, req.auth.username], (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)

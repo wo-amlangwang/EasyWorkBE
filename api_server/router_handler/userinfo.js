@@ -8,7 +8,7 @@ exports.getUserInfo = (req, res) => {
   // 定义查询用户信息的 SQL 语句
   const sql = `select id, username, nickname, email, user_pic from users where id=?`
   // 调用 db.query() 执行 SQL 语句
-  db.query(sql, req.user.id, (err, results) => {
+  db.query(sql, req.auth.id, (err, results) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 执行 SQL 语句成功，但是查询的结果可能为空
@@ -27,7 +27,7 @@ exports.updateUserInfo = (req, res) => {
   // 定义待执行的 SQL 语句
   const sql = `update users set ? where id=?`
   // 调用 db.query() 执行 SQL 语句并传递参数
-  db.query(sql, [req.body, req.user.id], (err, results) => {
+  db.query(sql, [req.body, req.auth.id], (err, results) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 执行 SQL 语句成功，但是影响行数不等于 1
@@ -45,7 +45,7 @@ exports.updatePassword = (req, res) => {
   // 根据 id 查询用户的信息
   const sql = `select * from users where id=?`
   // 执行根据 id 查询用户的信息的 SQL 语句
-  db.query(sql, req.user.id, (err, results) => {
+  db.query(sql, req.auth.id, (err, results) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 判断结果是否存在
@@ -60,7 +60,7 @@ exports.updatePassword = (req, res) => {
     // 对新密码进行加密处理
     const newPwd = bcrypt.hashSync(userinfo.newPwd, 10)
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, [newPwd, req.user.id], (err, results) => {
+    db.query(sql, [newPwd, req.auth.id], (err, results) => {
       // 执行 SQL 语句失败
       if (err) return res.cc(err)
       // 判断影响的行数
@@ -76,7 +76,7 @@ exports.updateAvatar = (req, res) => {
   // 1. 定义更新头像的 SQL 语句
   const sql = `update users set user_pic=? where id=?`
   // 2. 调用 db.query() 执行 SQL 语句
-  db.query(sql, [req.body.avatar, req.user.id], (err, results) => {
+  db.query(sql, [req.body.avatar, req.auth.id], (err, results) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 影响的行数是否等于 1
