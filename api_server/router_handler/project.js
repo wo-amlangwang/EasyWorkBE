@@ -63,7 +63,10 @@ exports.createProject = (req, res) => {
                     // 判断影响行数是否为 1
                     if (results.affectedRows !== 1) return res.cc('创建项目失败，请稍后再试！')
                     // 创建项目成功
-                    res.cc('创建成功！', 0)
+                    res.send({
+                        status: 0,
+                        id: results[0].id
+                    })
                 })
             })
         })
@@ -97,13 +100,13 @@ exports.addMember = (req, res) => {
     const info = req.body
 
     // 1.判断添加的成员是否存在
-    const sqlStr = 'select * from users where username=?'
-    db.query(sqlStr, info.username, (err, results) => {
+    const sqlStr = 'select * from users where id=?'
+    db.query(sqlStr, info.id, (err, results) => {
         // 执行 SQL 语句失败
         if (err) {
             return res.cc(err)
         }
-        // 判断用户名是否被占用
+        // 判断用户是否存在
         if (results.length < 0) {
             return res.cc('该用户不存在，请重新添加其他用户！')
         }
@@ -198,7 +201,7 @@ exports.getProjectMemberList = (req, res) => {
     const info = req.body
 
     // 定义查询项目列表数据的 SQL 语句
-    const sql = `select username from user where username in (select m_id from project_user_rel where p_id=? and deleted = 0)`
+    const sql = 'SELECT `users`.`username` FROM `users`, `project_user_rel` WHERE `project_user_rel`.`m_id` = `users`.`id` AND `project_user_rel`.`p_id` = ?'
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
