@@ -211,13 +211,16 @@ exports.getProjectMemberList = (req, res) => {
     // 获取客户端提交到服务器的信息
     const info = req.body
     // 定义查询项目列表数据的 SQL 语句
-    const sql = 'SELECT `users`.`username` FROM `users`, `project_user_rel` WHERE `project_user_rel`.`m_id` = `users`.`id` AND `project_user_rel`.`p_id` = ?'
+    const sql = 'SELECT `users`.`id`, `users`.`username` FROM `users`, `project_user_rel` WHERE `project_user_rel`.`m_id` = `users`.`id` AND `project_user_rel`.`p_id` = ?'
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
         let members = new Array();
         results.forEach((item) => {
-            members.push(item.username);
+            members.push({
+                id: item.id,
+                name: item.username
+            });
         });
         res.send({
             status: 0,
