@@ -120,7 +120,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { m_id: m_id, p_id: info.id }, (err, results) => {
+            db.query(sql, { m_id: info.mid, p_id: info.pid }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
