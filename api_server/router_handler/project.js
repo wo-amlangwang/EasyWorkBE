@@ -132,6 +132,30 @@ exports.addMember = (req, res) => {
     })
 }
 
+// 根据 成员Id（唯一性） 删除项目成员的处理函数
+exports.deleteMemberById = (req, res) => {
+    // 获取客户端提交到服务器的信息
+    const info = req.body
+
+    // 定义标记删除的 SQL 语句
+    const sql = `select * from project where id=? and create_user=?`
+    // 调用 db.query() 执行 SQL 语句
+    db.query(sql, [info.pid, req.auth.username], (err, results) => {
+        if (err) return res.cc(err)
+        if (results.affectedRows !== 1) return res.cc('当前用户不是该项目创建人，不可删除！')
+        // 定义标记删除的 SQL 语句
+        const sql2 = `update project_user_rel set deleted=1 where p_id=? and m_id=?`
+        // 调用 db.query() 执行 SQL 语句
+        db.query(sql2, [info.pid, info.mid], (err, results) => {
+            if (err) return res.cc(err)
+            // 此处不止更新一种
+            // if (results.affectedRows !== 1) return res.cc('删除项目失败！')
+            res.cc('删除成员成功！', 0)
+        })
+    })
+}
+
+
 // 根据 项目Id（唯一性） 删除项目的处理函数
 exports.deleteProjectById = (req, res) => {
     // 获取客户端提交到服务器的信息
@@ -172,7 +196,7 @@ exports.updateProjectById = (req, res) => {
             return res.cc('项目名被占用，请更换其他项目名！')
         }
         // 定义更新的 SQL 语句
-        const sql = `update project set project_name=?, project_details=? where id=?`
+        const sql = `update project set project_name=?, project_details=? where id=? and crea`
         // 调用 db.query() 执行 SQL 语句
         db.query(sql, [info.project_name, info.project_details, info.id], (err, results) => {
             if (err) return res.cc(err)
