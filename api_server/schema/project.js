@@ -17,8 +17,8 @@ exports.create_schema = {
     },
 }
 
-// 定义添加成员数据的规则对象
-exports.addmember_schema = {
+// 定义添加/删除成员数据的规则对象
+exports.member_schema = {
     body: {
         mid: id,
         pid: id
