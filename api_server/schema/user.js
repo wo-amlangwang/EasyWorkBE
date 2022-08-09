@@ -12,6 +12,7 @@ const password = joi
 const id = joi.number().integer().min(1).required()
 const nickname = joi.string().required()
 const user_email = joi.string().email().required()
+const likename = joi.string().empty("").default("")
 
 // 定义验证 avatar 头像的验证规则
 const avatar = joi.string().dataUri().required()
@@ -56,5 +57,12 @@ exports.update_password_schema = {
 exports.update_avatar_schema = {
   body: {
     avatar
+  }
+}
+
+// 验证规则对象 - 根据用户名LIKE查找返回用户ID和用户名头像
+exports.get_like_user_schema = {
+  body: {
+    likename: likename
   }
 }
