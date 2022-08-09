@@ -92,9 +92,9 @@ exports.getLikeUser = (req, res) => {
   const info = req.body
 
   // 定义查询用户信息的 SQL 语句
-  const sql = "select id,  user_pic from users where username LIKE '%" + info.likename + "%'"
+  const sql = "select id, username, user_pic from users where username LIKE ? AND id != ?"
   // 调用 db.query() 执行 SQL 语句
-  db.query(sql, (err, results) => {
+  db.query(sql, ['%' + info.likename + '%', req.auth.id], (err, results) => {
     // 执行 SQL 语句失败
     if (err) return res.cc(err)
     // 用户信息获取成功
