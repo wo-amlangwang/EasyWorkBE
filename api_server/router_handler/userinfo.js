@@ -85,3 +85,23 @@ exports.updateAvatar = (req, res) => {
     res.cc('更换头像成功！', 0)
   })
 }
+
+// 根据用户名LIKE查找返回用户ID和用户名头像的处理函数
+exports.getLikeUser = (req, res) => {
+  // 接收表单的数据
+  const info = req.body
+
+  // 定义查询用户信息的 SQL 语句
+  const sql = "select id,  user_pic from users where username LIKE '%" + info.likename + "%'"
+  // 调用 db.query() 执行 SQL 语句
+  db.query(sql, (err, results) => {
+    // 执行 SQL 语句失败
+    if (err) return res.cc(err)
+    // 用户信息获取成功
+    res.send({
+      status: 0,
+      message: '获取用户信息成功！',
+      data: results,
+    })
+  })
+}
