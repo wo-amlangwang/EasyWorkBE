@@ -120,7 +120,7 @@ exports.addMember = (req, res) => {
             // 3.定义添加新成员的 SQL 语句
             const sql = 'insert into project_user_rel set ?'
             // 调用 db.query() 执行 SQL 语句
-            db.query(sql, { p_name: info.project_name, m_id: m_id, p_id: info.id }, (err, results) => {
+            db.query(sql, { m_id: m_id, p_id: info.id }, (err, results) => {
                 // 判断 SQL 语句是否执行成功
                 if (err) return res.cc(err)
                 // 判断影响行数是否为 1
@@ -138,11 +138,11 @@ exports.deleteProjectById = (req, res) => {
     const info = req.body
 
     // 定义标记删除的 SQL 语句
-    const sql = `update project set deleted=1 where id=?`
+    const sql = `update project set deleted=1 where id=? and create_user=?`
     // 调用 db.query() 执行 SQL 语句
-    db.query(sql, info.id, (err, results) => {
+    db.query(sql, [info.id, req.auth.username], (err, results) => {
         if (err) return res.cc(err)
-        if (results.affectedRows !== 1) return res.cc('删除项目失败！')
+        if (results.affectedRows !== 1) return res.cc('当前用户不是该项目创建人！')
         // 定义标记删除的 SQL 语句
         const sql2 = `update project_user_rel set deleted=1 where p_id=?`
         // 调用 db.query() 执行 SQL 语句
