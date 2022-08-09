@@ -11,20 +11,17 @@ const type = joi.number().integer().min(0).max(3).required()
 const priority = joi.number().integer().min(0).max(2).required()
 const status = joi.number().integer().min(0).max(2).required()
 const details = joi.string().required()
-const comment = joi.string().required()
 
 // 验证规则对象 - 创建任务目
 exports.create_schema = {
     body: {
         task_name: name,
         task_details: details,
-        project_name: name,
         p_id: id,
         type: type,
         priority: priority,
         deadline: details,
         assignee: name,
-        task_comment: comment
     },
 }
 
@@ -117,6 +114,13 @@ exports.update_task_schema = {
         deadline: details,
         assignee: name,
         status: status,
-        task_comment: comment
     },
+}
+
+
+exports.comment_schema = {
+    body: {
+        tid: id,
+        content: details
+    }
 }

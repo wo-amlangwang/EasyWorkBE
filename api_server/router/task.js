@@ -10,7 +10,7 @@ const task_handler = require('../router_handler/task')
 const expressJoi = require('@escook/express-joi')
 // 2. 导入需要的验证规则对象
 const { create_schema, delete_task_schema, type_task_schema, priority_task_schema, status_task_schema,
-    updatetype_task_schema, updatepriority_task_schema, updatestatus_task_schema, get_task_schema, update_task_schema } = require('../schema/task')
+    updatetype_task_schema, comment_schema, updatepriority_task_schema, updatestatus_task_schema, get_task_schema, update_task_schema } = require('../schema/task')
 
 // 创建新任务的路由
 router.post('/create', expressJoi(create_schema), task_handler.createTask)
@@ -36,4 +36,6 @@ router.post('/gettask', expressJoi(get_task_schema), task_handler.getTaskById)
 // 根据 任务 id 修改任务基本信息的路由（创建人）
 router.post('/updatetask', expressJoi(update_task_schema), task_handler.updateTaskById)
 
+// 评论
+router.post('/comment', expressJoi(comment_schema), task_handler.comment)
 module.exports = router

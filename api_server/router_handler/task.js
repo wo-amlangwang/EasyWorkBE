@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 // 导入全局的配置文件
 const config = require('../config')
 const moment = require('moment')
+const time_line = require('../services/TimeLine')
 
 // 创建新任务的处理函数
 exports.createTask = (req, res) => {
@@ -21,10 +22,9 @@ exports.createTask = (req, res) => {
         // task_name: info.task_name, task_details: info.task_details,project_name: info.project_name, p_id: info.p_id,
         // create_user: req.auth.username, update_user: req.auth.username,create_time: create_time, 
         // update_time: create_time, deadline: info.deadline, assignee: info.assignee
-        task_name: info.task_name, task_details: info.task_details,project_name: info.project_name, p_id: info.p_id,
+        task_name: info.task_name, task_details: info.task_details, p_id: info.p_id,
         type: info.type, create_user: req.auth.username, update_user: req.auth.username, priority: info.priority,
-        create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee,
-        task_comment: info.task_comment
+        create_time: create_time, update_time: create_time, deadline: info.deadline, assignee: info.assignee
     }, (err, results) => {
         // 判断 SQL 语句是否执行成功
         if (err) return res.cc(err)
@@ -214,4 +214,35 @@ exports.updateTaskById = (req, res) => {
         if (results.affectedRows !== 1) return res.cc('更新任务失败！')
         res.cc('更新任务成功！', 0)
     })
+}
+
+
+exports.comment = (req, res) => {
+    // 检查用户是否在任务所在组中
+    let sql = 'SELECT COUNT(`id`) FROM `task` WHERE `id` = ?'
+    db.query(sql, req.body.tid, (err, results) => {
+        if (err) return res.cc('任务不存在')
+    })
+    sql = `
+        SELECT
+            COUNT(a.id) AS cnt
+        FROM
+            project_user_rel AS a,
+            task AS b
+        WHERE
+            b.id = ? AND
+            b.p_id = a.p_id AND
+            a.m_id = ?`;
+    db.query(sql, [req.body.tid, req.auth.id], (err, results) => {
+        if (err) return res.cc(err)
+        if (results[0].cnt !== 1) return res.cc('您不在该任务所在组中！')
+    })
+    time_line.newRecord(req.body.tid,req.body.content, 2, req.auth.id).then(results => {
+        res.send({
+            status: 0,
+            id: results.insertId,
+        })
+    }).catch(err => {
+        res.cc(err)
+    });
 }
