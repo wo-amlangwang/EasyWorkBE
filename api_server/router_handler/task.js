@@ -191,6 +191,10 @@ exports.getTaskById = (req, res) => {
     db.query(sql, req.body.id, (err, results) => {
         if (err) return res.cc(err)
         if (results.length !== 1) return res.cc('查询任务失败！')
+        results = results[0];
+        results.create_time = moment(results.create_time).format('YYYY-MM-DD HH:mm:ss')
+        results.update_time = moment(results.update_time).format('YYYY-MM-DD HH:mm:ss')
+        results.deadline = moment(results.deadline).format('YYYY-MM-DD HH:mm:ss')
         res.send({
             status: 0,
             message: '查询任务成功！',

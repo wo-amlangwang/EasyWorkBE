@@ -15,6 +15,12 @@ exports.getProjectList = (req, res) => {
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, req.auth.id, (err, results) => {
         if (err) return res.cc(err)
+        results = results.map(item => {
+            item.create_time = moment(item.create_time).format('YYYY-MM-DD HH:mm:ss')     
+            item.update_time = moment(item.update_time).format('YYYY-MM-DD HH:mm:ss')
+            item.deadline = moment(item.deadline).format('YYYY-MM-DD HH:mm:ss')
+            return item;
+        });
         res.send({
             status: 0,
             message: '获取项目列表数据成功！',
@@ -81,6 +87,11 @@ exports.getProjectById = (req, res) => {
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
         if (results.length !== 1) return res.cc('查询项目基本信息失败！')
+
+        results[0].create_time = moment(results[0].create_time).format('YYYY-MM-DD HH:mm:ss')     
+        results[0].update_time = moment(results[0].update_time).format('YYYY-MM-DD HH:mm:ss')
+        results[0].deadline = moment(results[0].deadline).format('YYYY-MM-DD HH:mm:ss')
+
         res.send({
             status: 0,
             message: '查询项目基本信息成功！',
@@ -240,6 +251,12 @@ exports.getProjectTaskList = (req, res) => {
     // 调用 db.query() 执行 SQL 语句
     db.query(sql, info.id, (err, results) => {
         if (err) return res.cc(err)
+        results = results.map(item => {
+            item.create_time = moment(item.create_time).format('YYYY-MM-DD HH:mm:ss')     
+            item.update_time = moment(item.update_time).format('YYYY-MM-DD HH:mm:ss')
+            item.deadline = moment(item.deadline).format('YYYY-MM-DD HH:mm:ss')
+            return item;
+        });
         res.send({
             status: 0,
             message: '获取项目任务列表数据成功！',
