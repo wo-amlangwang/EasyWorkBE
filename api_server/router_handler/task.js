@@ -9,6 +9,10 @@ const config = require('../config')
 const moment = require('moment')
 const time_line = require('../services/TimeLine')
 
+// 工具类
+const utils_task = require('../utils/task')
+const utils_user = require('../utils/user')
+
 // 创建新任务的处理函数
 exports.createTask = (req, res) => {
     // 获取客户端提交到服务器的信息
@@ -218,31 +222,41 @@ exports.updateTaskById = (req, res) => {
 
 
 exports.comment = (req, res) => {
-    // 检查用户是否在任务所在组中
-    let sql = 'SELECT COUNT(`id`) FROM `task` WHERE `id` = ?'
-    db.query(sql, req.body.tid, (err, results) => {
-        if (err) return res.cc('任务不存在')
-    })
-    sql = `
-        SELECT
-            COUNT(a.id) AS cnt
-        FROM
-            project_user_rel AS a,
-            task AS b
-        WHERE
-            b.id = ? AND
-            b.p_id = a.p_id AND
-            a.m_id = ?`;
-    db.query(sql, [req.body.tid, req.auth.id], (err, results) => {
-        if (err) return res.cc(err)
-        if (results[0].cnt !== 1) return res.cc('您不在该任务所在组中！')
-    })
-    time_line.newRecord(req.body.tid,req.body.content, 2, req.auth.id).then(results => {
+    // 获取任务归属项目组
+    utils_task.getTaskProjectID(req.body.tid).then(res => {
+        // 任务存在判断用户是否在该组中
+        return utils_user.checkInProject(req.auth.id, res);
+    }).then(res => {
+        // 添加评论到时间线 
+        return time_line.newRecord(req.body.tid, req.body.content, 2, req.auth.id);
+    }).then(results => {
+        // 返回评论ID
         res.send({
             status: 0,
             id: results.insertId,
         })
     }).catch(err => {
+        // 以上步骤出现错误返回错误信息
+        res.cc(err)
+    });
+}
+
+exports.time_line = (req, res) => {
+    // 获取任务归属项目组
+    utils_task.getTaskProjectID(req.params.id).then(res => {
+        // 任务存在判断用户是否在该组中
+        return utils_user.checkInProject(req.auth.id, res);
+    }).then(res => {
+        // 查询时间线
+        return time_line.getRecord(req.params.id);
+    }).then(results => {
+        // 返回时间线结果
+        res.send({
+            status: 0,
+            id: results,
+        })
+    }).catch(err => {
+        // 以上步骤出现错误返回错误信息
         res.cc(err)
     });
 }

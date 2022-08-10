@@ -25,3 +25,35 @@ exports.newRecord = (tid, content, type, user) => {
         });
     })
 }
+
+/**
+ * 查询时间线记录
+ * 
+ * @param {Number} tid 
+ */
+exports.getRecord = (tid) => {
+    return new Promise((resolve, reject) => {
+        const sql = `
+        SELECT
+            a.\`id\` AS \`time_line_id\`,
+            a.\`content\`,
+            a.\`type\`,
+            a.\`create_time\`,
+            b.\`id\` AS \`uid\`,
+            b.\`nickname\` 
+        FROM
+            \`time_line\` AS a,
+            \`users\` AS b 
+        WHERE
+            a.\`create_user\` = b.\`id\` 
+            AND a.\`tid\` = ?;`
+        db.query(sql, tid, (err, results) => {
+            if (err) return reject('任务不存在')
+            results = results.map(item => {
+                item.create_time = moment(item.create_time).format('YYYY-MM-DD HH:mm:ss')
+                return item
+            })
+            resolve(results)
+        })
+    });
+}

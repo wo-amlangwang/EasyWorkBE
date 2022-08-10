@@ -117,10 +117,17 @@ exports.update_task_schema = {
     },
 }
 
-
+// 验证规则对象 - 添加评论
 exports.comment_schema = {
     body: {
         tid: id,
         content: details
     }
+}
+
+// 验证规则对象 - 获取任务时间线
+exports.time_line_task_schema = {
+    params: {
+        id: id
+    },
 }
