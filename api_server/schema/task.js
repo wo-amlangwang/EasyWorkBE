@@ -108,7 +108,6 @@ exports.update_task_schema = {
         id: id,
         task_name: name,
         task_details: details,
-        p_id: id,
         type: type,
         priority: priority,
         deadline: details,
