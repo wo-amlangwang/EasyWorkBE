@@ -207,7 +207,7 @@ exports.updateProjectById = (req, res) => {
             return res.cc('项目名被占用，请更换其他项目名！')
         }
         // 定义更新的 SQL 语句
-        const sql = `update project set project_name=?, project_details=? where id=? and crea`
+        const sql = `update project set project_name=?, project_details=? where id=? and create_id=?`
         // 调用 db.query() 执行 SQL 语句
         db.query(sql, [info.project_name, info.project_details, info.id], (err, results) => {
             if (err) return res.cc(err)
