@@ -1,0 +1,21 @@
+// 这是一个全局的配置文件
+
+module.exports = {
+  // 加密和解密 Token 的秘钥
+
+  // 请使用https://1password.com/zh-cn/password-generator/ 生成 长度64 勾选符号
+  jwtSecretKey: '',
+  // token 的有效期
+  expiresIn: '10h',
+  // database 配置
+  database: {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '123456',
+    database: 'easywork',
+  },
+  run: {
+    port: 3007,
+  }
+}

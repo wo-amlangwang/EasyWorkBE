@@ -10,12 +10,12 @@ const task_handler = require('../router_handler/task')
 const expressJoi = require('@escook/express-joi')
 // 2. 导入需要的验证规则对象
 const { create_schema, delete_task_schema, type_task_schema, priority_task_schema, status_task_schema,
-    updatetype_task_schema, updatepriority_task_schema, updatestatus_task_schema, get_task_schema, update_task_schema } = require('../schema/task')
+    updatetype_task_schema, comment_schema, updatepriority_task_schema, updatestatus_task_schema, get_task_schema, update_task_schema, time_line_task_schema } = require('../schema/task')
 
 // 创建新任务的路由
 router.post('/create', expressJoi(create_schema), task_handler.createTask)
 // 删除任务的路由
-router.post('/deletetask', expressJoi(delete_task_schema), task_handler.deleteTaskByName)
+router.post('/deletetask', expressJoi(delete_task_schema), task_handler.deleteTaskById)
 
 // 获取单一项目任务列表 按类型查询
 router.post('/tasktypelist/:type', expressJoi(type_task_schema), task_handler.getTaskListByType)
@@ -36,4 +36,8 @@ router.post('/gettask', expressJoi(get_task_schema), task_handler.getTaskById)
 // 根据 任务 id 修改任务基本信息的路由（创建人）
 router.post('/updatetask', expressJoi(update_task_schema), task_handler.updateTaskById)
 
+// 评论
+router.post('/comment', expressJoi(comment_schema), task_handler.comment)
+// 获取
+router.get('/timeline/:id', expressJoi(time_line_task_schema), task_handler.time_line)
 module.exports = router

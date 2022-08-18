@@ -2,7 +2,7 @@
 const joi = require('@hapi/joi')
 
 // 定义项目名的验证规则
-const name = joi.string().alphanum().min(1).max(10).required()
+const name = joi.string().min(1).max(10).required()
 
 // 定义 id, details的验证规则
 const id = joi.number().integer().min(1).required()
@@ -17,25 +17,25 @@ exports.create_schema = {
     },
 }
 
-// 定义添加成员数据的规则对象
-exports.addmember_schema = {
+// 定义添加/删除成员数据的规则对象
+exports.member_schema = {
     body: {
-        project_name: name,
-        member: name
+        mid: id,
+        pid: id
     },
 }
 
 // 验证规则对象 - 删除项目
 exports.delete_project_schema = {
     body: {
-        project_name: name
+        id: id
     },
 }
 
 // 验证规则对象 - 查询项目
 exports.get_project_schema = {
     body: {
-        project_name: name
+        id: id
     },
 }
 

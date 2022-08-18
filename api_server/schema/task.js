@@ -3,8 +3,7 @@ const joi = require('@hapi/joi')
 const moment = require('moment')
 
 // 定义项目名的验证规则
-const name = joi.string().alphanum().min(1).max(10).required()
-// const name2 = joi.string().alphanum().max(1).required()
+const name = joi.string().min(1).max(10).required()
 
 // 定义 id, details的验证规则
 const id = joi.number().integer().min(1).required()
@@ -12,28 +11,25 @@ const type = joi.number().integer().min(0).max(3).required()
 const priority = joi.number().integer().min(0).max(2).required()
 const status = joi.number().integer().min(0).max(2).required()
 const details = joi.string().required()
-const comment = joi.string().required()
 
 // 验证规则对象 - 创建任务目
 exports.create_schema = {
     body: {
         task_name: name,
         task_details: details,
-        project_name: name,
+        p_id: id,
         type: type,
         priority: priority,
         deadline: details,
         assignee: name,
-        // assignee: name2,
-        task_comment: comment
     },
 }
 
 // 验证规则对象 - 删除任务
 exports.delete_task_schema = {
     body: {
-        project_name: name,
-        task_name: name
+        p_id: id,
+        id: id
     },
 }
 
@@ -43,7 +39,7 @@ exports.type_task_schema = {
         type: type
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -53,7 +49,7 @@ exports.priority_task_schema = {
         priority: priority
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -63,7 +59,7 @@ exports.status_task_schema = {
         status: status
     },
     body: {
-        project_name: name,
+        p_id: id,
     },
 }
 
@@ -73,8 +69,8 @@ exports.updatetype_task_schema = {
         type: type
     },
     body: {
-        project_name: name,
-        task_name: name
+        p_id: id,
+        id: id
     },
 }
 
@@ -84,8 +80,8 @@ exports.updatepriority_task_schema = {
         priority: priority
     },
     body: {
-        project_name: name,
-        task_name: name
+        p_id: id,
+        id: id
     },
 }
 
@@ -95,8 +91,8 @@ exports.updatestatus_task_schema = {
         status: status
     },
     body: {
-        project_name: name,
-        task_name: name
+        p_id: id,
+        id: id
     },
 }
 
@@ -106,19 +102,31 @@ exports.get_task_schema = {
         id: id,
     },
 }
-
 // 验证规则对象 - 更新任务
 exports.update_task_schema = {
     body: {
         id: id,
         task_name: name,
         task_details: details,
-        project_name: name,
         type: type,
         priority: priority,
         deadline: details,
         assignee: name,
         status: status,
-        task_comment: comment
+    },
+}
+
+// 验证规则对象 - 添加评论
+exports.comment_schema = {
+    body: {
+        tid: id,
+        content: details
+    }
+}
+
+// 验证规则对象 - 获取任务时间线
+exports.time_line_task_schema = {
+    params: {
+        id: id
     },
 }
